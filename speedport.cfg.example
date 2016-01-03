@@ -1,0 +1,10 @@
+[Speedport]
+#modules = arp, bonding_client, bonding_tr181, bonding_tunnel, dhcp_client, dhcp_server, dns, dsl, filterlist, igmp_proxy, igmp_snooping, interfaces, ipv6, lteinfo, memory, module, routing, session, speed, webdav, wlan
+modules = arp, bonding_client, dhcp_server, dns, dsl, interfaces, memory, wlan
+password = password
+hostname = speedport.ip
+
+[Graphite]
+server = graphite-server
+prefix = speedport
+hostname = hostname-used-in-graphite
