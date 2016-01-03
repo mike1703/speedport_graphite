@@ -5,6 +5,8 @@ import re
 import ConfigParser
 import graphitesend
 import lib
+import os
+import sys
 
 def get_challenge(hostname):
     data = {
@@ -111,7 +113,8 @@ def process_data(inp):
     return data
 
 config = ConfigParser.RawConfigParser()
-config.read('speedport.cfg')
+current_path = os.path.dirname(os.path.realpath(sys.argv[0]))
+config.read(current_path + '/speedport.cfg')
 modules = map(str.strip,config.get("Speedport", "modules").split(','))
 password = config.get("Speedport", "password")
 hostname = config.get("Speedport", "hostname")
