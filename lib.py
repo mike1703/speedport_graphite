@@ -100,7 +100,8 @@ def get_interfaces(data):
 
     result = dict()
     for interface in interfaces:
-        result[interface.get('interface')] = {
+        # automatically converts WIFI_2.4 to WIFI_2-4
+        result[interface.get('interface').replace(".","-")] = {
             'rx_errors':  interface.get('rx_errors'),
             'tx_errors':  interface.get('tx_errors'),
             'rx_packets': interface.get('rx_packets'),
