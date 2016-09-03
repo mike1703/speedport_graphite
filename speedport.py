@@ -8,6 +8,13 @@ import lib
 import os
 import sys
 
+VERBOSE=False
+SILENT=False
+if "-v" in sys.argv:
+    VERBOSE=True
+if "-s" in sys.argv:
+    SILENT=True
+
 def get_challenge(hostname):
     data = {
         'csrf_token': 'nulltoken',
@@ -48,7 +55,8 @@ def get_session(hostname, password):
     json = simplejson.loads(sanitize_json(ret.content))
     result = lib.result2dict(json)
     if result.get('login') == 'success':
-        print 'login successful'
+        if not SILENT:
+            print 'login successful'
         return ret.cookies.get('SessionID_R3')
     else:
         return None
@@ -70,7 +78,8 @@ def get_all_data(hostname, password, modules):
     if session:
         data = dict()
         for module in modules:
-            print "processing", module
+            if not SILENT:
+                print "processing", module
             data[module] = get_data(hostname, module, session)
         return data
     return None
@@ -128,3 +137,7 @@ data = lib.flatten_dict(data)
 
 g = graphitesend.init(graphite_server=graphite_server, prefix=graphite_prefix, system_name=graphite_hostname)
 g.send_dict(data)
+
+if VERBOSE:
+    from pprint import pprint
+    pprint(data)
